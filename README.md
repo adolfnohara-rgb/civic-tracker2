@@ -49,8 +49,8 @@ Version Control: Git & GitHub
 
 👥 Team Members
 
-Aayush Sharma – Role
-Adolf Nohara – Role
+Aayush Sharma – Front-end coding
+Adolf Nohara – Back-end coding
 Hamsini Rapalli - Front-end coding
 Haneesh - Role
 Jaypal - Role
