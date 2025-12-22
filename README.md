@@ -53,7 +53,7 @@ Aayush Sharma – Front-end coding
 Adolf Nohara –  Front-end coding 
 Hamsini Rapalli - Front-end coding
 Haneesh - Role
-Jaypal - Role
+Jaypal - i can handel backend (node.js,express,api,mongodb,etc.. related backend)
 Pratik Munde - Role
 
 
