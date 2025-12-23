@@ -120,7 +120,7 @@ our Team Members
 
 Aayush Sharma – Role
 Adolf Nohara – (I will handle related backend and frontend like: MongoDB,Html,Css,Js,React.js and in Verson control : Github. firebase, kiro,chatgpt )
-Hamsini Rapalli -Role
+Hamsini Rapalli -Front end coding ( I handle the user experince in the website- HTML/CSS/JSS)
 Haneesh - Role
 Jaypal -UI/UX, backend develper (i will handel all thing related backend like : Node.js,Express.js,MongoDB,API etc....)
 Pratik Munde - Role
