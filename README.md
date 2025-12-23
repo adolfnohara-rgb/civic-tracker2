@@ -118,7 +118,7 @@ Data base schema Design(created by jaypal for stor data in database (MongoDB))
 our Team Members
 
 Aayush Sharma – Role
-Adolf Nohara – Role
+Adolf Nohara – (I will handle all thing related backend and frontend like: MongoDB,Html,Css,Js,React.js and in Verson control : Github. firebase, kiro,chatgpt )
 Hamsini Rapalli -Role
 Haneesh - Role
 Jaypal -UI/UX, backend develper (i will handel all thing related backend like : Node.js,Express.js,MongoDB,API etc....)
