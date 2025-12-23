@@ -2,7 +2,8 @@ project Name: Civic Issue Reporting & Tracking System
 
 problem statement: People in many areas face daily civic problems like damaged roads, garbage overflow, water leaks, and electricity issues. Reporting these problems is often difficult because there is no single, easy platform. Complaints are usually made verbally or through different channels, and there is no proper way to track their status.
 
-The Civic Issue Reporting & Tracking System provides a simple web platform where citizens can report issues using photos and live location. Authorities can manage and resolve complaints efficiently, while citizens can track their complaints in real time, ensuring transparency and faster action.
+The Civic Issue Reporting & Tracking System provides a simple web platform where citizens can report issues using photos and live
+elocation. Authorities can manage and resolve complaints efficiently, while citizens can track their complaints in real time, ensuring transparency and faster action.
 
 
 
