@@ -13,8 +13,9 @@ const checkDuplicate = require("../utils/duplicateChecker");
 // CREATE ISSUE (Citizen)
 exports.createIssue = async (req, res) => {
   try {
-    const { title, description, category, latitude, longitude, imageUrl } =
+    const { title, description, category, latitude, longitude } =
       req.body;
+    const imageUrl = req.file.path;
 
     // 🧠 AI category prediction
     const aiCategory = predictCategory(description);

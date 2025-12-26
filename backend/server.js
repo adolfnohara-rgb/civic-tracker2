@@ -1,11 +1,22 @@
-const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const cors = require("cors");
+
+// const cors = require("cors");
 
 const autoEscalateIssues = require("./utils/autoEscalation");
 
+const mongoose = require("mongoose");
+
+
+
 dotenv.config();
+const express = require("express");
+const cors = require("cors");
+const authRoutes = require("./routes/authRoutes");
+const issueRoutes = require("./routes/issueRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+
+
+
 
 const app = express();
 
@@ -13,35 +24,20 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 9️⃣ Connect auth routes to server
-// 🔁 Update server.js
-// Add these lines above app.listen():
-const authRoutes = require("./routes/authRoutes");
+// mongo connection
+const connectDb = require("./config/connectDB");
+connectDb();
+
+//API Routes
 app.use("/api/auth", authRoutes);
-
-// 1️⃣ Connect issue routes to server
-// 🔁 Update server.js
-// Add these lines above app.listen():
-const issueRoutes = require("./routes/issueRoutes");
 app.use("/api/issues", issueRoutes);
-
-
-
-// 5️⃣ Connect admin routes to server
-// 🔁 Update server.j
-// Add these lines above app.listen():
-const adminRoutes = require("./routes/adminRoutes");
 app.use("/api/admin", adminRoutes);
 
 
-
-
-// test route
+//Serve HTML pages
 app.get("/", (req, res) => {
-  res.send("Backend is running 🚀");
+  res.send("send public file");
 });
-
-
 
 
 // mongo connection
@@ -64,7 +60,16 @@ mongoose
     console.error("MongoDB connection error:", err);
   });
 
-// START SERVER (THIS IS THE KEY PART)
+app.get("/citizen",(req,res)=>{
+  res.send("will be citizen.html pgae");
+});
+
+app.get("/admin",(req,res)=>{
+  res.send("here will be admin.html page");
+});
+
+
+// start server 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -6,8 +6,14 @@ const calculatePriority = require("../utils/priorityAI");
 
 const issueSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
-    description: { type: String, required: true },
+    title: {
+       type: String, 
+       required: true 
+      },
+    description: {
+       type: String, 
+       required: true
+       },
     category: {
       type: String,
       enum: ["Road", "Garbage", "Water", "Electricity"],
