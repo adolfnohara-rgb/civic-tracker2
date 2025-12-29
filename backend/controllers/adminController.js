@@ -2,6 +2,8 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+const Issue = require("../models/Issue");
+
 // REGISTER (Citizen)
 exports.register = async (req, res) => {
   try {
@@ -55,5 +57,99 @@ exports.login = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+
+
+
+// //for real time status admin of issue in admin page 
+// exports.updateIssueStatus = async (req, res) => {
+//   try {
+//     // only admin
+//     // if (req.user.role !== "admin") {
+//     //   return res.status(403).json({ message: "Admin only" });
+//     // }
+
+//     const { status } = req.body;
+//     const issueId = req.params.id;
+
+//     const issue = await Issue.findByIdAndUpdate(
+//       issueId,
+//       { status },
+//       { new: true }
+//     );
+
+//     if (!issue) {
+//       return res.status(404).json({ message: "Issue not found" });
+//     }
+
+//     // 🔥 REAL-TIME PUSH
+//     const io = req.app.get("io");
+//     io.emit("issue-updated", issue);
+
+//     res.json(issue);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
+
+
+//for real time status admin of issue in admin page 
+// exports.updateIssueStatus = async (req, res) => {
+//   try {
+//     // only admin
+//     // if (req.user.role !== "admin") {
+//     //   return res.status(403).json({ message: "Admin only" });
+//     // }
+
+//     const { status } = req.body;
+//     const issueId = req.params.id;
+
+//     const issue = await Issue.findByIdAndUpdate(
+//       issueId,
+//       { status },
+//       { new: true }
+//     );
+
+//     if (!issue) {
+//       return res.status(404).json({ message: "Issue not found" });
+//     }
+
+//     // 🔥 REAL-TIME PUSH
+//     const io = req.app.get("io");
+//     io.emit("issue-updated", issue);
+
+//     res.json(issue);
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };
+
+
+exports.updateIssueStatus = async (req, res) => {
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ message: "Admin only" });
+    }
+
+    const { status } = req.body;
+
+    const issue = await Issue.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    if (!issue) {
+      return res.status(404).json({ message: "Issue not found" });
+    }
+
+    const io = req.app.get("io");
+    io.emit("issue-updated", issue);
+
+    res.json(issue);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };

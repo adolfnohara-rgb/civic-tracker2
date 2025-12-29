@@ -1,0 +1,215 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+
+     <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+
+</head>
+<body>
+
+<header>
+    <h1>Admin Dashboard</h1>
+
+    <div class="profile-container">
+        <div id="profileIcon">A</div>
+
+        <div id="profileDropdown" class="hidden">
+            <p><strong id="adminName">Admin Name</strong></p>
+            <p id="adminEmail">admin@email.com</p>
+            <p class="role">Administrator</p>
+            <hr>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+</header>
+
+
+<main>
+    <section id="issues-section">
+        <div class="section-header">
+            <h2>Reported Issues <span class="count-badge" id="issueCount">0</span></h2>
+            <button onclick="exportToCSV()" class="export-btn">Export CSV</button>
+        </div>
+        
+        <div class="controls">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="Search issues..." 
+            />
+
+            <select id="statusFilter">
+                <option value="ALL">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+
+            <select id="categoryFilter">
+                <option value="ALL">All Categories</option>
+                <option value="Road">Road Issues</option>
+                <option value="Garbage">Garbage</option>
+                <option value="Water">Water</option>
+                <option value="Electricity">Electricity</option>
+            </select>
+        </div>
+
+        <table id="issuesTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Issue Details</th>
+                    <th>Reporter</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+             
+            </tbody>
+        </table>
+        <p id="emptyState" class="empty-state">
+            No issues reported yet.
+        </p>
+
+    </section>
+</main>
+
+<script src="admin.js"></script>
+
+</body>
+</html> -->
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../css/admin.css">
+
+
+    <!-- Leaflet CSS -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+</head>
+
+<body>
+
+<header>
+    <h1>Admin Dashboard</h1>
+
+    <div class="profile-container">
+        <div id="profileIcon">A</div>
+
+        <div id="profileDropdown" class="hidden">
+            <p><strong id="adminName">Admin Name</strong></p>
+            <p id="adminEmail">admin@email.com</p>
+            <p class="role">Administrator</p>
+            <hr>
+            <button id="logoutBtn">Logout</button>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- 🔥 MAP SECTION -->
+    <section style="margin-bottom: 30px;">
+        <h2>Issues Map View</h2>
+        <div id="map"></div>
+<!-- <div class="map-legend">
+  <div><span class="legend-dot red"></span> Pending</div>
+  <div><span class="legend-dot yellow"></span> In Progress</div>
+  <div><span class="legend-dot green"></span> Resolved</div>
+  <div style="margin-top: 8px;">
+    <span class="legend-dot hotspot" style="background-color: #ef4444; opacity: 0.5;"></span> Hotspot (Multiple nearby issues)
+  </div>
+</div> -->
+<div class="map-legend">
+  <div class="legend-item">
+    <span class="legend-dot pending"></span> Pending
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot progress"></span> In Progress
+  </div>
+  <div class="legend-item">
+    <span class="legend-dot resolved"></span> Resolved
+  </div>
+  <div class="legend-item">
+    <span class="legend-circle"></span> Hotspot (multiple nearby issues)
+  </div>
+</div>
+
+
+
+    </section>
+
+    <!-- EXISTING TABLE SECTION -->
+    <section id="issues-section">
+        <div class="section-header">
+            <h2>Reported Issues <span class="count-badge" id="issueCount">0</span></h2>
+            <button onclick="exportToCSV()" class="export-btn">Export CSV</button>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="Search issues..." />
+
+            <select id="statusFilter">
+                <option value="ALL">All Status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Resolved">Resolved</option>
+            </select>
+
+            <select id="categoryFilter">
+                <option value="ALL">All Categories</option>
+                <option value="Road">Road</option>
+                <option value="Garbage">Garbage</option>
+                <option value="Water">Water</option>
+                <option value="Electricity">Electricity</option>
+            </select>
+        </div>
+
+        <table id="issuesTable" border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Issue Details</th>
+                    <th>Reporter</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <p id="emptyState" class="empty-state">No issues reported yet.</p>
+    </section>
+</main>
+
+<!-- Leaflet JS FIRST -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Your admin JS AFTER -->
+ <script src="/socket.io/socket.io.js"></script>
+<script src="../js/admin.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CivicTracker | Citizen Dashboard</title>
+<link rel="stylesheet" href="../Css/citizen.css">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="logo">
+        <i class="fas fa-landmark"></i>
+        CivicTracker
+    </div>
+    <div class="nav-links">
+        <a href="#" class="nav-link active" data-section="dashboard">Dashboard</a>
+<a href="#" class="nav-link" data-section="my-issues">My Issues</a>
+<a href="#" class="nav-link" data-section="analytics">Analytics</a>
+<a href="#" class="nav-link" data-section="notifications">Notifications</a>
+
+    </div>
+    <div class="user-profile">
+        <div class="profile-dropdown">
+            <img src="https://via.placeholder.com/40" alt="Profile" class="profile-img">
+            <span class="username">John Doe</span>
+            <i class="fas fa-chevron-down"></i>
+            <div class="dropdown-menu">
+            <a href="profile.html">
+             <i class="fas fa-user"></i> Profile
+             </a>
+
+            <a href="#" id="settingsBtn">
+            <i class="fas fa-cog"></i> Settings
+             </a>
+
+            <button id="logoutBtn" class="logout-btn">
+             <i class="fas fa-sign-out-alt"></i> Logout
+           </button>
+     </div>
+
+        </div>
+    </div>
+</nav>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <div class="sidebar-section">
+        <h4><i class="fas fa-tachometer-alt"></i> Quick Stats</h4>
+        <div class="stat-card">
+            <div class="stat-number" id="totalIssues">0</div>
+            <div class="stat-label">Total Issues</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="resolvedIssues">0</div>
+            <div class="stat-label">Resolved</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number" id="pendingIssues">0</div>
+            <div class="stat-label">Pending</div>
+        </div>
+    </div>
+
+
+    <div class="sidebar-section">
+    <h4><i class="fas fa-fire"></i> Trending Issues</h4>
+
+    <div class="trending-item">
+        <i class="fas fa-road"></i>
+        <span>Road Maintenance</span>
+        <span class="trend-count">12</span>
+    </div>
+
+    <div class="trending-item">
+        <i class="fas fa-lightbulb"></i>
+        <span>Street Lighting</span>
+        <span class="trend-count">8</span>
+    </div>
+
+    <div class="trending-item">
+        <i class="fas fa-trash"></i>
+        <span>Waste Management</span>
+        <span class="trend-count">6</span>
+    </div>
+   </div>
+
+
+</div>
+
+<!-- MAIN CONTENT -->
+ <!-- MAIN CONTENT -->
+<div class="main-content">
+  <div class="container">
+   
+  <div class="page-section active-section" id="dashboard">
+  
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+      <h1><i class="fas fa-clipboard-list"></i> Community Issues Dashboard</h1>
+      <div class="subtitle">Stay informed and track issues in your community</div>
+    </div>
+
+    <!-- REPORT ISSUE FORM -->
+    <div class="form-box">
+      <div class="form-header">
+        <h3><i class="fas fa-plus-circle"></i> Report New Issue</h3>
+        <button type="button" class="toggle-form" onclick="toggleForm()">
+          <i class="fas fa-chevron-up"></i>
+        </button>
+      </div>
+
+      <div class="form-content" id="reportForm">
+
+        <!-- ROW 1 -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="title"><i class="fas fa-heading"></i> Issue Title</label>
+            <input id="title" placeholder="Brief description of the issue" required>
+          </div>
+
+          <div class="form-group">
+            <label for="category"><i class="fas fa-tags"></i> Category</label>
+            <select id="category" required>
+              <option value="">Select Category</option>
+              <option value="Infrastructure">🏗️ Infrastructure</option>
+              <option value="Transportation">🚗 Transportation</option>
+              <option value="Environment">🌱 Environment</option>
+              <option value="Safety">🛡️ Safety</option>
+              <option value="Utilities">⚡ Utilities</option>
+              <option value="Public Services">🏛️ Public Services</option>
+              <option value="Other">📋 Other</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="location"><i class="fas fa-map-marker-alt"></i> Location</label>
+            <input id="location" placeholder="Street address or landmark" required>
+            <button type="button" class="location-btn" onclick="getCurrentLocation()">
+              <i class="fas fa-crosshairs"></i> Use Current Location
+            </button>
+            
+          </div>
+
+          <div class="form-group">
+            <label for="priority"><i class="fas fa-exclamation"></i> Priority</label>
+            <select id="priority">
+              <option value="Low">🟢 Low</option>
+              <option value="Medium" selected>🟡 Medium</option>
+              <option value="High">🟠 High</option>
+              <option value="Critical">🔴 Critical</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- DESCRIPTION -->
+        <div class="form-group">
+          <label for="description"><i class="fas fa-align-left"></i> Description</label>
+          <textarea id="description" rows="4"
+            placeholder="Provide detailed information about the issue" required></textarea>
+        </div>
+
+        <!-- PHOTO UPLOAD -->
+        <div class="form-group">
+          <label><i class="fas fa-camera"></i> Add Photo (Optional)</label>
+
+          <div class="photo-upload">
+            <label for="photo" class="upload-box">
+              Click to upload photo or drag & drop
+            </label>
+
+            <input type="file" id="photo" accept="image/*" hidden>
+            <div class="photo-preview" id="photoPreview"></div>
+          </div>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="form-actions">
+          <button type="button" class="btn-secondary" id="clearBtn">
+            <i class="fas fa-times"></i> Clear
+          </button>
+
+          <button type="button" class="btn-primary" id="submitBtn">
+            <i class="fas fa-paper-plane"></i> Submit Issue
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="controls-section">
+      <div class="controls">
+
+        <div class="filter-group">
+          <select id="statusFilter">
+            <option value="All">All Status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+
+          <select id="categoryFilter">
+            <option value="All">All Categories</option>
+            <option value="Infrastructure">Infrastructure</option>
+            <option value="Transportation">Transportation</option>
+            <option value="Environment">Environment</option>
+            <option value="Safety">Safety</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Public Services">Public Services</option>
+            <option value="Other">Other</option>
+          </select>
+
+          <select id="priorityFilter">
+            <option value="All">All Priorities</option>
+            <option value="Critical">Critical</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+          </select>
+        </div>
+
+        <div class="search-group">
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input id="search" placeholder="Search issues...">
+          </div>
+
+          <div class="view-toggle">
+            <button class="view-btn active" data-view="grid">
+              <i class="fas fa-th"></i>
+            </button>
+            <button class="view-btn" data-view="list">
+              <i class="fas fa-list"></i>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ISSUES -->
+    <!-- ISSUES HEADER -->
+<div class="issues-header">
+  <h2>
+    <i class="fas fa-list-ul"></i>
+    Community Issues
+    <span id="issueCount" class="count-badge">0</span>
+  </h2>
+  <div id="issuesSummary"></div>
+</div>
+
+<!-- 🔥 THIS IS THE CONTAINER -->
+<div class="issues grid-view" id="issueList"></div>
+
+<!-- LOAD MORE (optional) -->
+<div class="load-more-section" id="loadMoreSection" style="display:none;">
+  <button class="btn-load-more" onclick="loadMoreIssues()">
+    <i class="fas fa-plus"></i> Load More Issues
+  </button>
+</div>
+
+  </div> 
+  </div>
+</div>
+
+
+<!-- MODAL FOR ISSUE DETAILS -->
+<div class="modal" id="issueModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 id="modalTitle"></h3>
+            <button class="modal-close" onclick="closeModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="modal-body" id="modalBody"></div>
+    </div>
+</div>
+
+<!-- NOTIFICATION TOAST -->
+<div class="toast" id="toast">
+    <div class="toast-content">
+        <i class="toast-icon"></i>
+        <span class="toast-message"></span>
+    </div>
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="../js/citizen.js"></script>
+</body>
+</html>
