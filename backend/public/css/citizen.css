@@ -324,10 +324,10 @@ nav {
     background: rgba(255, 255, 255, 0.3);
 }
 
-.form-content {
+/* .form-content {
     padding: 32px;
     transition: all 0.3s ease;
-}
+} */
 
 .form-content.collapsed {
     display: none;
@@ -955,4 +955,55 @@ nav {
 
 .active-section {
   display: block;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* smooth collapse */
+#reportForm {
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+  max-height: 2000px; /* big enough */
+  opacity: 1;
+}
+
+/* collapsed state */
+#reportForm.closed {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+
+.form-content {
+  background: #ffffff;          /* 🔥 restore white */
+  border-radius: 0 0 14px 14px;
+  padding: 24px;
+  overflow: hidden;
+  max-height: 2000px;
+  transition: max-height 0.35s ease, opacity 0.3s ease;
+}
+
+/* 
+.form-content.closed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  margin: 0;
+} */
+
+.form-content.closed {
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
 }

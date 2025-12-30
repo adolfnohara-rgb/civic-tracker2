@@ -687,21 +687,111 @@ document.querySelectorAll(".view-btn").forEach(btn => {
 
 
 //js logic for navbar 
+// document.querySelectorAll(".nav-link").forEach(link => {
+//   link.addEventListener("click", e => {
+//     e.preventDefault();
+
+//     // remove active from all links
+//     document.querySelectorAll(".nav-link")
+//       .forEach(l => l.classList.remove("active"));
+
+//     // hide all sections
+//     document.querySelectorAll(".page-section")
+//       .forEach(sec => sec.classList.remove("active-section"));
+
+//     // activate clicked
+//     link.classList.add("active");
+//     const sectionId = link.dataset.section;
+//     document.getElementById(sectionId).classList.add("active-section");
+//   });
+// });
+
+
+
 document.querySelectorAll(".nav-link").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
 
-    // remove active from all links
     document.querySelectorAll(".nav-link")
       .forEach(l => l.classList.remove("active"));
+    link.classList.add("active");
 
-    // hide all sections
     document.querySelectorAll(".page-section")
       .forEach(sec => sec.classList.remove("active-section"));
 
-    // activate clicked
-    link.classList.add("active");
-    const sectionId = link.dataset.section;
-    document.getElementById(sectionId).classList.add("active-section");
+    const target = link.dataset.target;
+    document.getElementById(target).classList.add("active-section");
+
+    if (target === "dashboard") fetchCommunityIssues();
+    if (target === "my-issues") fetchMyIssues();
   });
+});
+
+
+
+
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const toggleBtn = document.getElementById("toggleFormBtn");
+  const reportForm = document.getElementById("reportForm");
+  const icon = toggleBtn.querySelector("i");
+
+  toggleBtn.addEventListener("click", () => {
+    reportForm.classList.toggle("closed");
+
+    // switch arrow direction
+    if (reportForm.classList.contains("closed")) {
+      icon.classList.remove("fa-chevron-up");
+      icon.classList.add("fa-chevron-down");
+    } else {
+      icon.classList.remove("fa-chevron-down");
+      icon.classList.add("fa-chevron-up");
+    }
+  });
+});
+
+
+function toggleForm() {
+  const form = document.getElementById("reportForm");
+  const icon = document.querySelector(".toggle-form i");
+
+  form.classList.toggle("closed");
+
+  if (form.classList.contains("closed")) {
+    icon.classList.remove("fa-chevron-up");
+    icon.classList.add("fa-chevron-down");
+  } else {
+    icon.classList.remove("fa-chevron-down");
+    icon.classList.add("fa-chevron-up");
+  }
+}
+
+
+async function fetchCommunityIssues() {
+  const res = await fetch("http://localhost:5000/api/issues");
+  const data = await res.json();
+  issues = data;
+  renderIssues(issues);
+}
+
+
+async function fetchMyIssues() {
+  const res = await fetch("http://localhost:5000/api/issues/my", {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token")
+    }
+  });
+  const data = await res.json();
+  issues = data;
+  renderIssues(issues);
+}
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  fetchCommunityIssues();
 });

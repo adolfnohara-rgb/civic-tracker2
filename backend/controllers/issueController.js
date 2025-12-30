@@ -58,75 +58,126 @@ const checkDuplicate = require("../utils/duplicateChecker");
 //   }
 // };
 
+// exports.createIssue = async (req, res) => {
+//   try {
+//     const { title, description, category, imageUrl, location } = req.body;
+
+//     const latitude = location?.latitude;
+//     const longitude = location?.longitude;
+
+//     if (latitude == null || longitude == null) {
+//       return res.status(400).json({ message: "Location missing" });
+//     }
+
+//     const aiCategory = predictCategory(description);
+
+//     // const duplicate = await checkDuplicate(aiCategory, latitude, longitude);
+//     // if (duplicate) {
+//     //   return res.status(409).json({
+//     //     message: "Similar issue already reported nearby",
+//     //   });
+//     // }
+
+//     const priorityScore = calculatePriority({
+//       description,
+//       createdAt: new Date(),
+//     });
+
+//     const issue = await Issue.create({
+//       title,
+//       description,
+//       category: aiCategory,
+//       imageUrl,
+//       location: { latitude, longitude },
+//       reportedBy: req.user.id,
+//       priorityScore,
+//     });
+
+//     const io = req.app.get("io");
+//     io.emit("new-issue", issue);
+
+//     res.status(201).json(issue);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
 exports.createIssue = async (req, res) => {
   try {
-    const { title, description, category, imageUrl, location } = req.body;
+    const { title, description, category, location, imageUrl } = req.body;
 
-    const latitude = location?.latitude;
-    const longitude = location?.longitude;
-
-    if (latitude == null || longitude == null) {
+    if (!location?.latitude || !location?.longitude) {
       return res.status(400).json({ message: "Location missing" });
     }
-
-    const aiCategory = predictCategory(description);
-
-    // const duplicate = await checkDuplicate(aiCategory, latitude, longitude);
-    // if (duplicate) {
-    //   return res.status(409).json({
-    //     message: "Similar issue already reported nearby",
-    //   });
-    // }
-
-    const priorityScore = calculatePriority({
-      description,
-      createdAt: new Date(),
-    });
 
     const issue = await Issue.create({
       title,
       description,
-      category: aiCategory,
+      category,
       imageUrl,
-      location: { latitude, longitude },
-      reportedBy: req.user.id,
-      priorityScore,
+      location,
+      reportedBy: req.user.id, // 🔥 IMPORTANT
     });
 
     const io = req.app.get("io");
-    io.emit("new-issue", issue);
+    io.emit("issue-updated", issue);
 
     res.status(201).json(issue);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
-
 
 
 
 
 
 // GET ALL ISSUES (Public)
+// exports.getAllIssues = async (req, res) => {
+//   try {
+//     const issues = await Issue.find().populate("reportedBy", "name");
+
+//     //belore getting all issues by admin sort it by priority 
+//     issues.sort((a, b) => b.priorityScore - a.priorityScore);
+
+//     res.json(issues);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
 exports.getAllIssues = async (req, res) => {
   try {
-    const issues = await Issue.find().populate("reportedBy", "name");
-
-    //belore getting all issues by admin sort it by priority 
-    issues.sort((a, b) => b.priorityScore - a.priorityScore);
+    const issues = await Issue.find()
+      .populate("reportedBy", "name email")
+      .sort({ createdAt: -1 });
 
     res.json(issues);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 };
 
+
+
 // GET MY ISSUES (Citizen)
+// exports.getMyIssues = async (req, res) => {
+//   try {
+//     const issues = await Issue.find({ reportedBy: req.user.id });
+//     res.json(issues);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
 exports.getMyIssues = async (req, res) => {
   try {
-    const issues = await Issue.find({ reportedBy: req.user.id });
+    const issues = await Issue.find({ reportedBy: req.user.id })
+      .sort({ createdAt: -1 });
+
     res.json(issues);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 };
